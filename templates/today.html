@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线工具箱</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/date.css">
+    <link rel="icon" href="/static/image/box.ico" type="image/x-icon" />
+    <style>
+        body,
+        th,
+        td {
+            font-family: "微软雅黑", "黑体", "宋体";
+        }
+
+        /* body {
+            background-color: #AEDD81;
+        } */
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #000 !important;
+        }
+
+        .holder {
+            position: relative;
+            left: 40px;
+            top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="app">
+        <Inavbar></Inavbar>
+    </div>
+
+    <div class="container" id="date">
+        <div class="row">
+            <div class="container col-md-4 class="text-center"">
+                <h1 >历史上的今天</h1>
+
+                <div class="holder">
+
+                    <div class="month blue">
+
+                        <p>{{sm}}</p>
+
+                    </div>
+
+                    <div class="day">
+
+                        <p>{{day}}</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <br><br>
+            <!-- <br> -->
+            <div class="container col-md-6">
+                <table class="table table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                时间
+                            </th>
+                            <th>
+                                事件
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for today in todays %}
+                        <tr>
+                            <td>
+                                {{today.year}}年{{today.month}}月{{today.day}}日
+                            </td>
+
+                            <td>{{ today.title }}</td>
+                        </tr>
+                        {% endfor %}
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+    <footer>
+        <div class="item">
+            ©2020 
+            <a class="beian" href="http://beian.miit.gov.cn">皖ICP备19023504号-1</a>
+        </div>
+    </footer>
+
+
+
+    <script src="/static/js/index.js"></script>
+
+</body>

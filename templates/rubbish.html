@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>在线工具箱</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<link rel="icon" href="/static/image/box.ico" type="image/x-icon" />
+	<style type="text/css">
+		.image {
+			list-style-image: url("/static/image/3-1ZQ51P0040-L_爱奇艺_爱奇艺.png");
+
+		}
+	</style>
+	<link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<div id="app">
+			<Inavbar />
+		</div>
+	</div>
+	<div class="container">
+
+		<div class="container ">
+
+			<div id="rub">
+				<div class="col-md-offset-4 col-md-4 text-center">
+					<h1>垃圾分类查询</h1>
+					<br>
+				</div>
+
+				<div class="col-md-4 col-md-offset-4">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="请输入垃圾名称..." v-model="word">
+
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" @click.prevent="getRet">查询</button>
+						</span>
+
+					</div>
+					<br>
+					<br>
+					<br>
+				</div>
+				<div>
+					<table class="table table-bordered">
+
+						<thead>
+							<tr>
+								<th>
+									垃圾
+								</th>
+								<th>
+									分类
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% raw %}
+							<tr v-for="r in ret">
+								<td>
+									{{r["name"]}}
+								</td>
+
+								<td v-if="r['type']==3">
+									其他垃圾
+								</td>
+								<td v-if="r['type']==2">
+									厨余垃圾
+								</td>
+								<td v-if="r['type']==1">
+									有害垃圾
+								</td>
+								<td v-if="r['type']==0">
+									可回收垃圾
+								</td>
+							</tr>
+							{% endraw %}
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- <br>
+	<br>
+	<br> -->
+
+		<div class="container">
+			<div class="row">
+				<div class="panel panel-success col-md-5">
+					<div class="panel-heading">
+						<h3 class="panel-title"><img src="/static/image/garbage-type-0.png" alt="" width="30px"
+								height="30px">可回收垃圾
+						</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="image">
+							<li>释义：可回收垃圾是指适宜回收、可循环利用的生活废弃物。</li>
+							<li>示例：常见包括各类废金属、玻璃瓶、易拉罐、饮料瓶、塑料玩具、书本、报纸、广告单、纸板箱、衣服、床上用品、电子产品等</li>
+							<li>提示：轻投轻放；清洁干燥，避免污染，费纸尽量平整；立体包装物请清空内容物，清洁后压扁投放；有尖锐边角的、应包裹后投放</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2"></div>
+				<div class="panel panel-info col-md-5">
+					<div class="panel-heading">
+						<h3 class="panel-title"><img src="/static/image/garbage-type-2.png" alt="" width="30px"
+								height="30px">厨余（湿）垃圾
+						</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="image">
+							<li>释义：厨余垃圾是指居民日常生活及食品加工、饮食服务、单位供餐等活动中产生的垃圾</li>
+							<li>示例：常见包括菜叶、剩菜、剩饭、果皮、蛋壳、茶渣、骨头等</li>
+							<li>提示：纯流质的食物垃圾、如牛奶等，应直接倒进下水口。有包装物的湿垃圾应将包装物去除后分类投放、包装物请投放到对应的可回收物或干垃圾容器</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="panel panel-danger col-md-5">
+					<div class="panel-heading">
+						<h3 class="panel-title"><img src="/static/image/garbage-type-1.png" alt="" width="30px"
+								height="30px">有害垃圾
+						</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="image">
+							<li>释义：有毒有害垃圾是指存有对人体健康有害的重金属、有毒的物质或者对环境造成现实危害或者潜在危害的废弃物。</li>
+							<li>示例：常见包括废电池、废荧光灯管、废灯泡、废水银温度计、废油漆桶、过期药品、农药、杀虫剂等。</li>
+							<li>提示：分类投放有害垃圾时，应注意轻放。其中：废灯管等易破损的有害垃圾应连带包装或包裹后投放；废弃药品宜连带包装一并投放；杀虫剂等压力罐装容器，应排空内容物后投放；在公共场所产生有害垃圾且未发现对应收集容器时，应携带至有害垃圾投放点妥善投放。
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2"></div>
+				<div class="panel panel-primary col-md-5">
+					<div class="panel-heading">
+						<h3 class="panel-title"><img src="/static/image/garbage-type-3.png" alt="" width="30px"
+								height="30px">干垃圾</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="image">
+							<li>释义：干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物</li>
+							<li>示例：常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物</li>
+							<li>提示：尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内</li>
+						</ul>
+						<br>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="item">
+			©2020
+			<a class="beian" href="http://beian.miit.gov.cn">皖ICP备19023504号-1</a>
+		</div>
+	</footer>
+
+	<script src="/static/js/index.js"></script>
+
+	<script>
+		new Vue({
+			el: '#rub',
+			data: {
+				word: '',
+				ret: '',
+				flag: false
+			},
+			methods: {
+				getRet: function () {
+					axios.get('https://api.tianapi.com/txapi/lajifenlei/index?key=a60e8ce03367d4aa8f289c6e7214ab07', {
+						params: { 'word': this.word }
+					})
+						.then(res => {
+							console.log(res)
+							this.ret = res['data']['newslist']
+							this.flag = true
+						})
+						.catch(err => {
+							console.error(err);
+						})
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

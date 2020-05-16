@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>在线工具箱</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="icon" href="/static/image/box.ico" type="image/x-icon" />
+    <style>
+        #appp {
+            font-family: 'Avenir', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 60px;
+            /*font-size: 30px;*/
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="app">
+            <Inavbar />
+        </div>
+    </div>
+
+    <div id="appp">
+        <h1>在线翻译</h1>
+        <h5 class="text-muted">别查了，反正你也记不住</h5>
+        <!-- <translate-form v-on:formSubmit="translateText"></translate-form> -->
+        <div id="translateForm" class="container">
+            <div class="row">
+                <div class="col-xs-6  col-xs-offset-3">
+                    <form v-on:submit="formSubmit" class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="textToTranslate" placeholder="输入需要翻译的内容">
+                        </div>
+                        <div class="form-group">
+                            <select v-model="language" class="form-control">
+                                <option value="en">English</option>
+                                <option value="ru">Russian</option>
+                                <option value="ko">korean</option>
+                                <option value="ja">Japanese</option>
+                                <option value="zh">中文</option>
+                            </select>
+                        </div>
+                        <input type="submit" class="btn btn-info" value="翻译">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <!-- <translate-output :translatedText="translatedText"></translate-output> -->
+        {% raw %}
+        <div id="translateOutput" class="col-md-6 col-md-offset-3">
+            <h2>{{translatedText}}</h2>
+        </div>
+        {% endraw %}
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <footer>
+        <div class="item">
+            ©2020
+            <a class="beian" href="http://beian.miit.gov.cn">皖ICP备19023504号-1</a>
+        </div>
+    </footer>
+
+    <script src="/static/js/index.js"></script>
+    <script>
+        new Vue({
+            el: '#appp',
+            data: {
+                textToTranslate: "",
+                language: "",
+                translatedText: ""
+            },
+
+            methods: {
+                formSubmit: function (e) {
+                    if (this.textToTranslate == "") {
+                        alert("记得填写内容呀！")
+                    };
+                    // this.$emit("formSubmit",this.textToTranslate,this.language);
+                    e.preventDefault();
+                    this.translateText(this.textToTranslate, this.language)
+                },
+
+                translateText: function (text, language) {
+                    console.log(text);
+                    this.$http.get('https://translate.yandex.net/api/v1.5/tr.json/translate' +
+                        '?key=trnsl.1.1.20180916T080453Z.af3d7ba798c0eb53.9dc3ee41ca4acb7af406230ceae6cbcb27329f06' +
+                        '&lang=' + language +
+                        '&text=' + text
+                    ).then((response) => {
+                        // console.log(response.body.text[0]);
+                        this.translatedText = response.body.text[0];
+                    })
+                }
+            },
+            created: function () {
+                this.language = 'en'
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

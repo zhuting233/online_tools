@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>在线工具箱</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="icon" href="/static/image/box.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style>
+        #appp {
+            font-family: 'Avenir', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 60px;
+        }
+
+        h1 {
+            font-size: 3em;
+            position: relative;
+            left: -25px;
+        }
+
+        h3 {
+            position: relative;
+            top: -17px;
+            text-align: right;
+            color: black;
+        }
+
+        .d {
+            position: relative;
+            left: -15px;
+        }
+
+        .num {
+            font-size: 9em;
+            position: relative;
+            left: -55px;
+        }
+
+        #anss {
+            font-size: 9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="app">
+            <Inavbar />
+        </div>
+    </div>
+
+    <div id="appp">
+        <h1>随机数生成器</h1>
+
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <div>
+                <div class="row">
+                    <div class="col-md-2 hidden-xs hidden-sm">
+                        <h3 class="left">从</h3>
+                    </div>
+                    <div class="hidden-md hidden-lg">
+                        <h2>从</h2>
+                    </div>
+                    <div class="col-md-3 ">
+                        <input type="number" id="input" class="form-control" v-model="start" step="1"
+                            required="required" title="start" min="1">
+                    </div>
+                    <div class="col-md-1 d hidden-xs hidden-sm">
+                        <h3>到</h3>
+                    </div>
+                    <div class="hidden-md hidden-lg">
+                        <h2>到</h2>
+                    </div>
+                    <div class="col-md-3 ">
+                        <input type="number" id="input" class="form-control" v-model="end" step="1" required="required"
+                            title="end" :min="start">
+                    </div>
+
+
+                    <div class="col-md-1">
+
+                        <button type="button" class="btn btn-success btn-large" @click="getRandom">开始</button>
+                    </div>
+                </div>
+            </div>
+            {% raw %}
+            <div class="container num hidden-xs hidden-sm" id="ans">
+                {{num}}
+            </div>
+            <div class="container  hidden-md hidden-lg" id="anss">
+                {{num}}
+            </div>
+            {% endraw %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <footer>
+        <div class="item">
+            ©2020
+            <a class="beian" href="http://beian.miit.gov.cn">皖ICP备19023504号-1</a>
+        </div>
+    </footer>
+
+    <script src="/static/js/index.js"></script>
+    <script>
+        new Vue({
+            el: '#appp',
+            data: {
+                start: 1,
+                end: 99,
+                num: null
+            },
+            methods: {
+                getRandom: function () {
+                    this.num = this.randomNum(this.start, this.end)
+                    console.log(this.num)
+                    this.st(this.num, 'ans', 2)
+                    this.st(this.num, 'anss', 2)
+                },
+                randomNum: function (minNum, maxNum) {
+                    switch (arguments.length) {
+                        case 1:
+                            return parseInt(Math.random() * minNum + 1, 10);
+                            break;
+                        case 2:
+                            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+                            break;
+                        default:
+                            return 0;
+                            break;
+                    }
+                },
+                roll: function (total, idname, step) {
+                    let n = 0;
+                    return function () {
+                        n = (n + step) >= total ? total : (n + step);
+                        if (n <= total) {
+                            document.getElementById(idname).innerHTML = n;
+                        }
+                    }
+                },
+                st: function (index, idname, step, runtime = 1000) {
+                    let rolling = this.roll(index, idname, step)
+                    runtime = (runtime >= 300) ? runtime : 1000;
+                    for (let i = 0; i < (index / step); i++) {
+                        let timer = setTimeout(rolling, (runtime / index) * i * step)
+                    }
+                    // clearTimeout(timer);
+                }
+
+            }
+        })
+    </script>
+
+</body>
+
+</html>

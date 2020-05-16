@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线工具箱</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/static/css/index.css">
+  <script type="text/javascript" src="/static/js/jquery.qrcode.min.js"></script>
+  <link rel="icon" href="/static/image/box.ico" type="image/x-icon" />
+  <style>
+    a {
+      color: aliceblue;
+    }
+
+    .navbar-brand:hover {
+      color: white;
+    }
+
+    a:hover {
+      color: black;
+    }
+
+    body {
+      /* background: #4facfe; */
+      background: rgba(79, 172, 254, 0.8);
+    }
+
+    h1 {
+      color: aliceblue;
+    }
+  </style>
+</head>
+
+<script type="text/javascript">
+  $(function () {
+    $('#qr_bt').click(function () {
+      //处理中文乱码函数
+      function toUtf8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+          c = str.charCodeAt(i);
+          if ((c >= 0x0001) && (c <= 0x007F)) {
+            out += str.charAt(i);
+          } else if (c > 0x07FF) {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+          } else {
+            out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+          }
+        }
+        return out;
+      }
+      var qr_content = toUtf8($('#qr_content').val());
+      if (qr_content === '') {
+        alert('请输入链接或者文字');
+        return;
+      }
+      $('#qrcode').empty().qrcode(qr_content);
+      // {#.append('<p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp（请自行保存分享）</p>')#}
+    });
+  });
+</script>
+
+</head>
+
+<body>
+  {% raw %}
+
+  <div id="app">
+    <div class="container">
+      <Inavbar></Inavbar>
+
+      <div class="container" id="content">
+
+
+        <div class="row">
+          <div class="col-md-5">
+            <h1>二维码生成器</h1>
+            <br>
+            <textarea id="qr_content" class="form-control" rows="5" required="required"></textarea>
+            <br>
+            <button type="button" class="btn btn-primary" id="qr_bt">点击生成</button>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-5">
+            <br>
+            <br>
+            <br>
+            <div id="qrcode"></div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <footer>
+      <div class="item">
+        {{footer}}
+        <a class="beian" href="http://beian.miit.gov.cn">{{beian}}</a>
+      </div>
+    </footer>
+
+  </div>
+  <script src="/static/js/index.js"></script>
+  <script>
+
+
+  </script>
+  {% endraw %}
+</body>
+
+</html>

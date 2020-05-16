@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线工具箱</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="icon" href="/static/image/box.ico" type="image/x-icon" />
+</head>
+
+<body>
+    {% raw %}
+    <div id="app">
+        <div class="container">
+            <Inavbar />
+        </div>
+        <!-- layer -->
+        <div class="layer">
+            <div class="inner">
+                <div class="container">
+                    <h1 class="innertext">
+                        {{bannerstring}}
+                    </h1>
+                    <!-- <br> -->
+                    <h3>{{description}}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- main -->
+
+        <div class="container main">
+            <br>
+            <br>
+            <br>
+
+            <div class="container">
+                <div class="navv">
+                    <div class="open block-container">
+                        <Iblock title="二维码生成" iconclass="qrcode" iconurl="/qrcode"> </Iblock>
+                        <Iblock title="历史上的今天" iconclass="today" iconurl="/today"> </Iblock>
+                        <Iblock title="亲戚关系计算器" iconclass="relation" iconurl="/relationship"></Iblock>
+                        <Iblock title="垃圾分类查询" iconclass="rubbish" iconurl="/rubbish"></Iblock>
+                        <Iblock title="在线翻译" iconclass="translate" iconurl="/translate"></Iblock>
+                        <Iblock title="随机数生成" iconclass="random" iconurl="/random"></Iblock>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+        </div>
+
+
+        <!-- footer -->
+        <footer>
+            <div class="item">
+                {{footer}}
+                <a class="beian" href="http://beian.miit.gov.cn">{{beian}}</a>
+            </div>
+        </footer>
+
+    </div>
+    <script src="/static/js/index.js"></script>
+    {% endraw %}
+</body>
+
+</html>
